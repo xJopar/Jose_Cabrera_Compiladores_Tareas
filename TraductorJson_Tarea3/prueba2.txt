@@ -1,9 +1,8 @@
 {
   "nombre": "Ivan",
   "apellido": "Figueredo",
-  "edad": 23,
-  "novia": "Laura",
+  "edad": 30,
   "ciudad": "Asuncion",
   "casado": false,
-  "hobbies": ["lol", "autoCAD", "youtube"]
+  "hobbies": ["autoCAD", "youtube"]
 }

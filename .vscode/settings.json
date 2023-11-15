@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ansin.h": "c",
+        "analizador_sintactico.h": "c"
+    }
+}
