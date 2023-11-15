@@ -1,8 +1,0 @@
-{
-  "nombre": "Ivan",
-  "apellido": "Figueredo",
-  "edad": 30,
-  "ciudad": "Asuncion",
-  "casado": false,
-  "hobbies": ["autoCAD", "youtube"]
-}

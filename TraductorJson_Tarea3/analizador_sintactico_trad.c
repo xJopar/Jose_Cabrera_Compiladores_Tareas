@@ -8,11 +8,7 @@
  *		Implementacion de un analizador sintactico para archivos JSON simplificado.
  */
 
-
-
-//Analizador Lexico
 #include "analizador_sintactico_trad.h"
-
 
 token t;
 FILE *archivo;
@@ -22,12 +18,11 @@ int tamActual = 0;
 char id[TAMLEX];
 char msg1[TAMMSG];
 
+/************* Analizador Lexico ********************/
 
-/**************** Funciones **********************/
-// Rutinas del analizador lexico
-void error(const char* mensaje)
+void error(const char* mensaje) 
 {
-	printf("Lin %d: Error Lexico. %s.\n",numLinea,mensaje);
+    printf("Lin %d: Error Lexico. %s\n", numLinea, mensaje);
 }
 
 void sigLex()
@@ -55,7 +50,7 @@ void sigLex()
         }
         else if (c == '\t') 
         {
-            // Ignorar los tabuladores
+            // ignora tabulaciones
             while (c == '\t') 
             {
                 c = fgetc(archivo);
@@ -68,7 +63,7 @@ void sigLex()
         } 
         else if (c == '\"')
         {
-            // es un LITERAL_CADENA
+            // es una cadena
             i = 0;
             id[i] = c;
             i++;
@@ -222,7 +217,7 @@ void sigLex()
                             error(msg);
                         acepto = 1;
                         t.compLex = VACIO;
-                        t.linea=numLinea;
+                        t.linea = numLinea;
                         ungetc(c, archivo);
                         break;
                 }
@@ -352,11 +347,16 @@ void sigLex()
  ==================================================================================================================
 */
 
-
 token tokenActual;
 int setSync[TAMCONJ];
 int bandError = 0;
 int posicion = -1;
+
+void errorSintactico(const char* mensaje) 
+{
+    printf(" Error sintáctico. %s",  mensaje);
+    bandError = 1;
+}
 
 void cargarTokens()
 {
@@ -364,12 +364,6 @@ void cargarTokens()
     {
         sigLex();   
     }
-}
-
-void errorSintactico(const char* mensaje) 
-{
-    printf(" Error sintáctico. %s",  mensaje);
-    bandError = 1;
 }
 
 void parser()
@@ -401,8 +395,9 @@ void match(int t)
 {
     if(t == tokenActual.compLex)
     {
+        sigLex();
         getToken();
-    }else
+    } else
     {
         sprintf(msg1, "En la linea %d No se esperaba  %s\n", tokenActual.linea, tokenActual.lexema );
         errorSintactico(msg1);
@@ -469,9 +464,8 @@ void objectP(int setSync[])
             match(R_LLAVE);
             break;
         default:
-            sprintf(msg1, "En la linea %d Se esperaba LITERAL_CADENA o R_LLAVE.\n" , tokenActual.linea);
+            sprintf(msg1, "En la linea %d Se esperaba CADENA o '}'.\n" , tokenActual.linea);
             errorSintactico(msg1);
-
             break;
     }
     
@@ -491,7 +485,7 @@ void array(int setSync[])
             arrayP(setSync);
             break;
         default:
-            sprintf(msg1, "En la linea %d Se esperaba L_CORCHETE.\n" , tokenActual.linea);
+            sprintf(msg1, "En la linea %d Se esperaba '['.\n" , tokenActual.linea);
             errorSintactico(msg1);
             break;
     }
@@ -519,7 +513,7 @@ void arrayP(int setSync[])
             match(R_CORCHETE);
             break;
         default:
-            sprintf(msg1, "En la linea %d Se esperaba L_LLAVE, L_CORCHETE o R_CORCHETE.\n" , tokenActual.linea);
+            sprintf(msg1, "En la linea %d Se esperaba {, [ o ].\n" , tokenActual.linea);
             errorSintactico(msg1);
             break;
     }
@@ -538,7 +532,7 @@ void elementList()
         elementListP(conjSig);
     } else
     {
-        sprintf(msg1, "En la linea %d Se esperaba L_LLAVE, L_CORCHETE.\n" , tokenActual.linea);
+        sprintf(msg1, "En la linea %d Se esperaba {, [.\n" , tokenActual.linea);
         errorSintactico(msg1);
         checkInput(conjSig,conjPrimero);
     }
@@ -643,7 +637,7 @@ void atributeName()
             match(LITERAL_CADENA);
             break;
         default:
-            sprintf(msg1, "En la linea %d Se esperaba LITERAL_CADENA.\n" , tokenActual.linea);
+            sprintf(msg1, "En la linea %d Se esperaba STRING.\n" , tokenActual.linea);
             errorSintactico(msg1);
             break;
     }
@@ -679,7 +673,7 @@ void atributeValue(int setSync[])
             match(PR_NULL);
             break;
         default:
-            errorSintactico("Se esperaba L_LLAVE, L_CORCHETE, LITERAL_CADENA, LITERAL_NUM, TRUE, FALSE O NULL.\n");
+            errorSintactico("Se esperaba {, [, LITERAL_CADENA, LITERAL_NUMERO, TRUE, FALSE O NULL.\n");
             break;
     }
 }
@@ -689,7 +683,6 @@ void atributeValue(int setSync[])
                                      Panic Mode para sincronizacion de errores
  ==================================================================================================================
 */
-
 
 void scan(int setSync1[], int setSync2[])
 {
@@ -759,6 +752,3 @@ void checkInput(int conjPrimero[], int conjSig[])
         scan(conjPrimero, conjSig);
     }
 }
-
-
-

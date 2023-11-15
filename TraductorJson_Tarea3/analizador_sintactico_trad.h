@@ -31,8 +31,9 @@ typedef struct {
     int linea;
 } token;
 
-/************* Prototipos del analizador sintactico ********************/
+/********* Prototipos de Analizador Sintactico *****************/
 void sigLex();
+void cargarTokens();
 void parser();
 void getToken();
 void json(int setSync[]);
@@ -51,7 +52,6 @@ void atributeName();
 void atributeValue(int setSync[]);
 void scan(int setSync1[], int setSync2[]);
 void checkInput(int conjPrimero[], int conjSig[]);
-
 
 /******** Prototipos del traductor *************/
 void jsonTrad();
