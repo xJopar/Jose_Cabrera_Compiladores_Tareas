@@ -17,9 +17,11 @@ int numLinea = 1;
 int tamActual = 0;
 char id[TAMLEX];
 char msg1[TAMMSG];
-
-/************* Analizador Lexico ********************/
-
+/*
+ ==================================================================================================================
+                                               Analizador Lexico
+ ==================================================================================================================
+*/
 void error(const char* mensaje) 
 {
     printf("Lin %d: Error Lexico. %s\n", numLinea, mensaje);

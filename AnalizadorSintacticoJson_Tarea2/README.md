@@ -4,7 +4,11 @@
  *	Nombre: José María Cabrera Peralta
  *  CI: 5553957
  *	Descripción: Implementación de un analizador léxico para archivos JSON simplificado.
->Implementar un analizador léxico para el lenguaje Json simplificado. Recibe un archivo fuente Json, debe realizar un análisis léxico reconociendo tokens, y luego por cada línea del fuente imprimir una línea en un archivo de salida con la secuencia de componentes léxicos encontrados separados por espacios (se adjuntan ejemplos de un fuente y su respectivo archivo de salida). En caso de error léxico deberá imprimir un mensaje de error y continuar con la siguiente línea del archivo fuente.
+>Implementar un analizador sintáctico descendente recursivo o LL(1) para el lenguaje Json
+simplificado. Recibe un archivo fuente Json, y debe imprimir en pantalla si el fuente es
+sintácticamente correcto o los errores encontrados en caso de existir (se adjuntan ejemplos
+de fuentes correctos). En caso de error se deberá implementar la estrategia de manejo de
+errores Panic Mode con sincronización y continuar el análisis.
 >*En lenguaje elegido fue C*
 
 ## Windows
